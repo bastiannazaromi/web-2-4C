@@ -1,20 +1,43 @@
 <?php
-
 defined('BASEPATH') or exit('No direct script access allowed');
 
 class M_Buku extends CI_Model
 {
+	// Ambil semua data buku
 	public function getAllBuku()
 	{
-		$this->db->select('id, judul, penulis, penerbit, tahun, jumlah_halaman');
-
-		$this->db->where('tahun <=', 2025);
-
-		$this->db->order_by('judul', 'asc');
-		// $this->db->limit(1);
-
 		return $this->db->get('buku')->result();
 	}
-}
 
-/* End of file M_Buku.php */
+	// Tambah data buku
+	public function insertBuku($data)
+	{
+		return $this->db->insert('buku', $data);
+	}
+
+	// Ambil satu data buku berdasarkan ID
+	public function getBukuById($id)
+	{
+		// $this->db->where('id', $id);
+
+		// return $this->db->get('buku')->row();
+
+		return $this->db->get_where('buku', ['id' => $id])->row();
+	}
+
+	// Update data buku
+	public function updateBuku($id, $data)
+	{
+		// update buku set penulis where id
+
+		$this->db->where('id', $id);
+		return $this->db->update('buku', $data);
+	}
+
+	// Hapus data buku
+	public function deleteBuku($id)
+	{
+		$this->db->where('id', $id);
+		return $this->db->delete('buku');
+	}
+}
