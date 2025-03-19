@@ -32,18 +32,48 @@ class Buku extends CI_Controller
 
 	public function postAdd()
 	{
-		$data = [
-			'judul'          => $this->input->post('judul'),
-			'penulis'        => $this->input->post('penulis'),
-			'penerbit'       => $this->input->post('penerbit'),
-			'tahun'          => $this->input->post('tahun'),
-			'jumlah_halaman' => $this->input->post('jumlah_halaman'),
-		];
+		$this->form_validation->set_rules('judul', 'Judul', 'required', [
+			'required' => 'Judul harus diisi!'
+		]);
+		$this->form_validation->set_rules('penulis', 'Penulis', 'required', [
+			'required' => 'Penulis harus diisi!'
+		]);
+		$this->form_validation->set_rules('penerbit', 'Penerbit', 'required', [
+			'required' => 'Penerbit harus diisi!'
+		]);
+		$this->form_validation->set_rules('tahun', 'Tahun', 'required|numeric|exact_length[4]', [
+			'required'     => 'Tahun harus diisi!',
+			'numeric'      => 'Tahun harus berupa angka!',
+			'exact_length' => 'Tahun harus terdiri dari 4 angka!'
+		]);
+		$this->form_validation->set_rules('jumlah_halaman', 'Jumlah Halaman', 'required|numeric|max_length[3]', [
+			'required'   => 'Jumlah halaman harus diisi!',
+			'numeric'    => 'Jumlah halaman harus berupa angka!',
+			'max_length' => 'Jumlah halaman maksimal 3 angka!'
+		]);
 
-		// proses untuk insert ke tabel
-		$this->buku->insertBuku($data);
+		if ($this->form_validation->run() == FALSE) {
+			$this->add();
+		} else {
+			$data = [
+				'judul'          => $this->input->post('judul'),
+				'penulis'        => $this->input->post('penulis'),
+				'penerbit'       => $this->input->post('penerbit'),
+				'tahun'          => $this->input->post('tahun'),
+				'jumlah_halaman' => $this->input->post('jumlah_halaman'),
+			];
 
-		redirect('buku');
+			// proses untuk insert ke tabel
+			$insert = $this->buku->insertBuku($data);
+
+			if ($insert) {
+				$this->session->set_flashdata('success', 'Data berhasil ditambahkan!');
+			} else {
+				$this->session->set_flashdata('error', 'Data gagal ditambahkan!');
+			}
+
+			redirect('buku');
+		}
 	}
 
 	public function edit($id)
@@ -63,24 +93,61 @@ class Buku extends CI_Controller
 
 	public function update()
 	{
-		$id   = $this->input->post('id');
-		$data = [
-			'judul'          => $this->input->post('judul'),
-			'penulis'        => $this->input->post('penulis'),
-			'penerbit'       => $this->input->post('penerbit'),
-			'tahun'          => $this->input->post('tahun'),
-			'jumlah_halaman' => $this->input->post('jumlah_halaman'),
-		];
+		$this->form_validation->set_rules('judul', 'Judul', 'required', [
+			'required' => 'Judul harus diisi!'
+		]);
+		$this->form_validation->set_rules('penulis', 'Penulis', 'required', [
+			'required' => 'Penulis harus diisi!'
+		]);
+		$this->form_validation->set_rules('penerbit', 'Penerbit', 'required', [
+			'required' => 'Penerbit harus diisi!'
+		]);
+		$this->form_validation->set_rules('tahun', 'Tahun', 'required|numeric|exact_length[4]', [
+			'required'     => 'Tahun harus diisi!',
+			'numeric'      => 'Tahun harus berupa angka!',
+			'exact_length' => 'Tahun harus terdiri dari 4 angka!'
+		]);
+		$this->form_validation->set_rules('jumlah_halaman', 'Jumlah Halaman', 'required|numeric|max_length[3]', [
+			'required'   => 'Jumlah halaman harus diisi!',
+			'numeric'    => 'Jumlah halaman harus berupa angka!',
+			'max_length' => 'Jumlah halaman maksimal 3 angka!'
+		]);
 
-		// proses update
-		$this->buku->updateBuku($id, $data);
+		$id = $this->input->post('id');
 
-		redirect('buku');
+		if ($this->form_validation->run() == FALSE) {
+			$this->edit($id);
+		} else {
+			$data = [
+				'judul'          => $this->input->post('judul'),
+				'penulis'        => $this->input->post('penulis'),
+				'penerbit'       => $this->input->post('penerbit'),
+				'tahun'          => $this->input->post('tahun'),
+				'jumlah_halaman' => $this->input->post('jumlah_halaman'),
+			];
+
+			// proses update
+			$update = $this->buku->updateBuku($id, $data);
+
+			if ($update) {
+				$this->session->set_flashdata('success', 'Data berhasil diubah!');
+			} else {
+				$this->session->set_flashdata('error', 'Data gagal diubah!');
+			}
+
+			redirect('buku');
+		}
 	}
 
 	public function delete($id)
 	{
-		$this->buku->deleteBuku($id);
+		$delete = $this->buku->deleteBuku($id);
+
+		if ($delete) {
+			$this->session->set_flashdata('success', 'Data berhasil dihapus!');
+		} else {
+			$this->session->set_flashdata('error', 'Data gagal dihapus!');
+		}
 
 		redirect('buku');
 	}
