@@ -15,19 +15,21 @@ class Buku extends CI_Controller
 
 		$data = [
 			'title' => 'Data Buku',
+			'page'  => 'buku/v_buku',
 			'buku'  => $buku
 		];
 
-		$this->load->view('v_buku', $data);
+		$this->load->view('index', $data);
 	}
 
 	public function add()
 	{
 		$data = [
-			'title' => 'Tambah Buku'
+			'title' => 'Tambah Buku',
+			'page'  => 'buku/v_addBuku'
 		];
 
-		$this->load->view('v_addBuku', $data);
+		$this->load->view('index', $data);
 	}
 
 	public function postAdd()
@@ -85,10 +87,11 @@ class Buku extends CI_Controller
 
 		$data = [
 			'title' => 'Edit Buku',
+			'page'  => 'buku/v_editBuku',
 			'buku'  => $buku
 		];
 
-		$this->load->view('v_editBuku', $data);
+		$this->load->view('index', $data);
 	}
 
 	public function update()
