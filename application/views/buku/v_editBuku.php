@@ -8,6 +8,7 @@
 	<div class="card-body">
 		<form action="<?= base_url('buku/update'); ?>" method="POST">
 			<input type="hidden" name="id" value="<?= $buku->id; ?>" required>
+
 			<div class="mb-3">
 				<label class="form-label">Judul Buku</label>
 				<input type="text" name="judul" class="form-control" value="<?= $buku->judul; ?>" required>

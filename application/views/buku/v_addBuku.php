@@ -7,6 +7,8 @@
 	</div>
 	<div class="card-body">
 		<form action="<?= base_url('buku/postAdd'); ?>" method="POST">
+			<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
+
 			<div class="mb-3">
 				<label class="form-label">Judul Buku</label>
 				<input type="text" name="judul" class="form-control" value="<?= set_value('judul'); ?>">

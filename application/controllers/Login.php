@@ -58,7 +58,7 @@ class Login extends CI_Controller
 
 			// Jika sukses, redirect ke halaman 'buku'
 			if ($cek == 'sukses') {
-				$this->session->set_flashdata('sukses', 'Login sukses');
+				$this->session->set_flashdata('success', 'Login sukses');
 				redirect('buku', 'refresh');
 			} else {
 				// Jika gagal, tampilkan error dan kembali ke login

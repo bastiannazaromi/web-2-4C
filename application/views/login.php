@@ -22,6 +22,8 @@
 
 	<!-- Form login mengarah ke method 'proses' di controller Login -->
 	<form action="<?= base_url('login/proses'); ?>" method="POST" id="loginForm">
+		<input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" />
+
 		<label for="username">Username</label><br>
 		<input type="text" id="username" name="username" required autocomplete="off"><br><br>
 
