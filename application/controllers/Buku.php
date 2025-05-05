@@ -14,6 +14,7 @@ class Buku extends CI_Controller
 		}
 
 		$this->load->model('M_Buku', 'buku');
+		$this->load->model('M_Penulis', 'penulis');
 	}
 
 	public function index()
@@ -26,17 +27,18 @@ class Buku extends CI_Controller
 			'buku'  => $buku
 		];
 
-		$this->load->view('index', $data);
+		$this->load->view('layout/index', $data);
 	}
 
 	public function add()
 	{
 		$data = [
-			'title' => 'Tambah Buku',
-			'page'  => 'buku/v_addBuku'
+			'title'   => 'Tambah Buku',
+			'page'    => 'buku/v_addBuku',
+			'penulis' => $this->penulis->getAllPenulis()
 		];
 
-		$this->load->view('index', $data);
+		$this->load->view('layout/index', $data);
 	}
 
 	public function postAdd()
@@ -44,7 +46,7 @@ class Buku extends CI_Controller
 		$this->form_validation->set_rules('judul', 'Judul', 'required', [
 			'required' => 'Judul harus diisi!'
 		]);
-		$this->form_validation->set_rules('penulis', 'Penulis', 'required', [
+		$this->form_validation->set_rules('id_penulis', 'Penulis', 'required', [
 			'required' => 'Penulis harus diisi!'
 		]);
 		$this->form_validation->set_rules('penerbit', 'Penerbit', 'required', [
@@ -66,7 +68,7 @@ class Buku extends CI_Controller
 		} else {
 			$data = [
 				'judul'          => $this->input->post('judul'),
-				'penulis'        => $this->input->post('penulis'),
+				'id_penulis'     => $this->input->post('id_penulis'),
 				'penerbit'       => $this->input->post('penerbit'),
 				'tahun'          => $this->input->post('tahun'),
 				'jumlah_halaman' => $this->input->post('jumlah_halaman'),
@@ -93,12 +95,13 @@ class Buku extends CI_Controller
 		}
 
 		$data = [
-			'title' => 'Edit Buku',
-			'page'  => 'buku/v_editBuku',
-			'buku'  => $buku
+			'title'   => 'Edit Buku',
+			'page'    => 'buku/v_editBuku',
+			'buku'    => $buku,
+			'penulis' => $this->penulis->getAllPenulis()
 		];
 
-		$this->load->view('index', $data);
+		$this->load->view('layout/index', $data);
 	}
 
 	public function update()
@@ -106,7 +109,7 @@ class Buku extends CI_Controller
 		$this->form_validation->set_rules('judul', 'Judul', 'required', [
 			'required' => 'Judul harus diisi!'
 		]);
-		$this->form_validation->set_rules('penulis', 'Penulis', 'required', [
+		$this->form_validation->set_rules('id_penulis', 'Penulis', 'required', [
 			'required' => 'Penulis harus diisi!'
 		]);
 		$this->form_validation->set_rules('penerbit', 'Penerbit', 'required', [
@@ -130,7 +133,7 @@ class Buku extends CI_Controller
 		} else {
 			$data = [
 				'judul'          => $this->input->post('judul'),
-				'penulis'        => $this->input->post('penulis'),
+				'id_penulis'     => $this->input->post('id_penulis'),
 				'penerbit'       => $this->input->post('penerbit'),
 				'tahun'          => $this->input->post('tahun'),
 				'jumlah_halaman' => $this->input->post('jumlah_halaman'),

@@ -11,7 +11,7 @@
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-end">
 						<li class="breadcrumb-item"><a href="<?= base_url('admin'); ?>">Home</a></li>
-						<li class="breadcrumb-item active" aria-current="page">Buku</li>
+						<li class="breadcrumb-item active" aria-current="page">Penulis</li>
 					</ol>
 				</div>
 			</div>
@@ -27,7 +27,7 @@
 			<!--begin::Row-->
 			<div class="row mb-3">
 				<div class="col-lg-3">
-					<a href="<?= base_url('buku/add'); ?>" class="btn btn-primary">Tambah</a>
+					<a href="<?= base_url('penulis/add'); ?>" class="btn btn-primary">Tambah</a>
 				</div>
 			</div>
 
@@ -35,41 +35,37 @@
 				<div class="col-lg-12">
 					<div class="card card-primary">
 						<div class="card-header">
-							Daftar Buku
+							Daftar Penulis
 						</div>
 						<div class="card-body">
 							<table class="table table-bordered table-striped">
 								<thead>
-									<tr>
+									<tr class="text-center">
 										<th>#</th>
-										<th>Judul</th>
-										<th>Penulis</th>
-										<th>Penerbit</th>
-										<th>Tahun</th>
-										<th>Jumlah Halaman</th>
+										<th>Nama Penulis</th>
+										<th>Tanggal Lahir</th>
+										<th>Alamat</th>
 										<th>Aksi</th>
 									</tr>
 								</thead>
 								<tbody>
-									<?php if (!empty($buku)) : ?>
+									<?php if (!empty($penulis)) : ?>
 										<?php $no = 1;
-										foreach ($buku as $b) : ?>
+										foreach ($penulis as $b) : ?>
 											<tr>
-												<td><?= $no++; ?></td>
-												<td><?= $b->judul; ?></td>
-												<td><?= $b->penulis; ?></td>
-												<td><?= $b->penerbit; ?></td>
-												<td><?= $b->tahun; ?></td>
-												<td><?= $b->jumlah_halaman; ?></td>
+												<td class="text-center"><?= $no++; ?></td>
+												<td><?= $b->nama; ?></td>
+												<td><?= date('d M Y', strtotime($b->tanggal_lahir)); ?></td>
+												<td><?= $b->alamat; ?></td>
 												<td>
-													<a href="<?= base_url('buku/edit/' . $b->id); ?>" class="btn btn-warning btn-sm">Edit</a>
-													<a href="<?= base_url('buku/delete/' . $b->id); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?');">Hapus</a>
+													<a href="<?= base_url('penulis/edit/' . $b->id); ?>" class="btn btn-warning btn-sm">Edit</a>
+													<a href="<?= base_url('penulis/delete/' . $b->id); ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?');">Hapus</a>
 												</td>
 											</tr>
 										<?php endforeach; ?>
 									<?php else : ?>
 										<tr>
-											<td colspan="7" class="text-center">Tidak ada data buku.</td>
+											<td colspan="7" class="text-center">Tidak ada data penulis.</td>
 										</tr>
 									<?php endif; ?>
 								</tbody>

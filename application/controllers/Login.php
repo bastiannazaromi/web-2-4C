@@ -12,7 +12,7 @@ class Login extends CI_Controller
 		if (!empty($this->session->userdata('user_login'))) {
 			if ($this->uri->segment(2) != 'logout') {
 				$this->session->set_flashdata('error', 'Anda sudah login');
-				redirect('buku', 'resfresh'); // (Typo: 'resfresh' harusnya 'refresh')
+				redirect('admin', 'refresh');
 			}
 		}
 
@@ -56,10 +56,9 @@ class Login extends CI_Controller
 			// Cek login via model
 			$cek = $this->login->cekLogin($username, $password);
 
-			// Jika sukses, redirect ke halaman 'buku'
 			if ($cek == 'sukses') {
 				$this->session->set_flashdata('success', 'Login sukses');
-				redirect('buku', 'refresh');
+				redirect('admin', 'refresh');
 			} else {
 				// Jika gagal, tampilkan error dan kembali ke login
 				$this->session->set_flashdata('error', $cek);

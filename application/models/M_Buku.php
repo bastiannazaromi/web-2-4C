@@ -6,6 +6,11 @@ class M_Buku extends CI_Model
 	// Ambil semua data buku
 	public function getAllBuku()
 	{
+		$this->db->select('buku.*, penulis.nama as penulis');
+		$this->db->join('penulis', 'buku.id_penulis = penulis.id', 'inner');
+
+		$this->db->order_by('buku.judul', 'asc');
+
 		return $this->db->get('buku')->result();
 	}
 
@@ -18,11 +23,10 @@ class M_Buku extends CI_Model
 	// Ambil satu data buku berdasarkan ID
 	public function getBukuById($id)
 	{
-		// $this->db->where('id', $id);
+		$this->db->select('buku.*, penulis.nama as penulis');
+		$this->db->join('penulis', 'buku.id_penulis = penulis.id', 'left');
 
-		// return $this->db->get('buku')->row();
-
-		return $this->db->get_where('buku', ['id' => $id])->row();
+		return $this->db->get_where('buku', ['buku.id' => $id])->row();
 	}
 
 	// Update data buku
